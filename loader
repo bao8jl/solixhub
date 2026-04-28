@@ -1105,11 +1105,12 @@ local Library do
 			return true
 		end
 
+		DeleteFile(Config.File)
+
 		if ErrorMessages[Result.code] then
 			if Result.code == "SECURITY_ERROR" or Result.code == "UNKNOWN_ERROR" then
 				LocalPlayer:Kick(ErrorMessages[Result.code])
 			else
-				DeleteFile(Config.File)
 				Library:Notification({
 					Title = "Error",
 					Description = ErrorMessages[Result.code],
