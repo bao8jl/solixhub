@@ -32,12 +32,14 @@ local IsMobile = UserInputService.TouchEnabled and not UserInputService.Keyboard
 
 local Folder_Configs = {
 	Directory = "solixhub",
-	Configs = "solixhub/Configs",
 	Assets = "solixhub/Assets",
+	Configs = "solixhub/Configs",
+	Datas = "solixhub/Datas",
+	Images = "solixhub/Images",
 	Themes = "solixhub/Themes"
 }
 
-for _, Folder in pairs(Folder_Configs) do
+for _, Folder in Folder_Configs do
 	if not isfolder(Folder) then
 		makefolder(Folder)
 	end
@@ -276,7 +278,7 @@ local Library do
 
 				setmetatable(NewItem, Instances)
 
-				for Property, Value in pairs(NewItem.Properties) do
+				for Property, Value in NewItem.Properties do
 					pcall(function()
 						NewItem.Instance[Property] = Value
 					end)
@@ -510,7 +512,7 @@ local Library do
 			Properties = Properties,
 		}
 
-		for Property, Value in pairs(ThemeData.Properties) do
+		for Property, Value in ThemeData.Properties do
 			if type(Value) == "string" then
 				Item[Property] = self.Theme[Value] or Value
 			elseif type(Value) == "function" then
