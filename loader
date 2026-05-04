@@ -27,6 +27,7 @@ local Players = cloneref(game:GetService("Players"))
 local TextService = cloneref(game:GetService("TextService"))
 local HttpService = cloneref(game:GetService("HttpService"))
 local Lighting = cloneref(game:GetService("Lighting"))
+local StarterGui = cloneref(game:GetService("StarterGui"))
 local Workspace = cloneref(game:GetService("Workspace"))
 local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
@@ -92,7 +93,11 @@ local ErrorMessages = {
 local GameConfig = GameList[GameId]
 
 if not GameConfig then
-	Players.LocalPlayer:Kick("This game is not supported.")
+	StarterGui:SetCore("SendNotification",{
+		Title = "Solix Hub",
+		Text = "This game is not supported.",
+		Icon = "rbxassetid://137698471325689",
+	})
 	return
 end
 
@@ -1030,9 +1035,9 @@ local Library do
 
 		if not string.match(CleanedKey, "^[A-Za-z0-9]+$") or #CleanedKey ~= 32 then
 			Library:Notification({
-				Title = "Error",
+				Title = "Solix Hub",
 				Description = "Invalid key format. Key must be 32 characters.",
-				Color = FromRGB(255, 60, 60),
+				Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 				Duration = 5
 			})
 			return false
@@ -1040,9 +1045,9 @@ local Library do
 
 		if CleanedKey ~= Key then
 			Library:Notification({
-				Title = "Info",
+				Title = "Solix Hub",
 				Description = "Extra spaces detected, verifying without spaces...",
-				Color = FromRGB(237, 170, 0),
+				Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 				Duration = 5
 			})
 		end
@@ -1051,9 +1056,9 @@ local Library do
 
 		if not Success then
 			Library:Notification({
-				Title = "Error",
+				Title = "Solix Hub",
 				Description = "Network error. Please try again.",
-				Color = FromRGB(255, 60, 60),
+				Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 				Duration = 5
 			})
 			return false
@@ -1075,9 +1080,9 @@ local Library do
 			getgenv().key_executions = Result.data and Result.data.total_executions or 0
 
 			Library:Notification({
-				Title = "Success",
+				Title = "Solix Hub",
 				Description = "Key expires in: " .. ToTime(getgenv().key_expire - os.time()),
-				Color = FromRGB(60, 255, 60),
+				Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 				Duration = 5
 			})
 
@@ -1096,7 +1101,12 @@ local Library do
 					or GameId == "9787206684" -- Be a Lucky Block
 					or GameId == "9875383684" -- Be a Brainrot
 				) and not getgenv().lilix then
-				LocalPlayer:Kick("This executor is not supported for this game.")
+				Library:Notification({
+					Title = "Solix Hub",
+					Description = "This executor is not supported for this game.",
+					Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+					Duration = 5
+				})
 			end
 
 			pcall(function()
@@ -1110,19 +1120,29 @@ local Library do
 
 		if ErrorMessages[Result.code] then
 			if Result.code == "SECURITY_ERROR" or Result.code == "UNKNOWN_ERROR" then
-				LocalPlayer:Kick(ErrorMessages[Result.code])
+				Library:Notification({
+					Title = "Solix Hub",
+					Description = ErrorMessages[Result.code],
+					Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+					Duration = 5
+				})
 			else
 				Library:Notification({
-					Title = "Error",
+					Title = "Solix Hub",
 					Description = ErrorMessages[Result.code],
-					Color = FromRGB(255, 60, 60),
+					Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 					Duration = 5
 				})
 			end
 			return false
 		end
 
-		LocalPlayer:Kick("Key check failed:\nCode: " .. Result.code)
+		Library:Notification({
+			Title = "Solix Hub",
+			Description = "Key check failed:\nCode: " .. Result.code,
+			Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+			Duration = 5
+		})
 		return false
 	end
 
@@ -1146,9 +1166,9 @@ local Library do
 			setclipboard(Config.Linkvertise)
 		end
 		Library:Notification({
-			Title = "Link Copied",
+			Title = "Solix Hub",
 			Description = "Linkvertise link copied to clipboard",
-			Color = FromRGB(60, 255, 60),
+			Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 			Duration = 5
 		})
 	end)
@@ -1158,9 +1178,9 @@ local Library do
 			setclipboard(Config.Rinku)
 		end
 		Library:Notification({
-			Title = "Link Copied",
+			Title = "Solix Hub",
 			Description = "Rinku link copied to clipboard",
-			Color = FromRGB(60, 255, 60),
+			Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 			Duration = 5
 		})
 	end)
@@ -1170,9 +1190,9 @@ local Library do
 			setclipboard(Config.Discord)
 		end
 		Library:Notification({
-			Title = "Discord Copied",
+			Title = "Solix Hub",
 			Description = "Discord invite copied to clipboard",
-			Color = FromRGB(60, 255, 60),
+			Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 			Duration = 5
 		})
 	end)
@@ -1182,9 +1202,9 @@ local Library do
 			setclipboard(Config.Shop)
 		end
 		Library:Notification({
-			Title = "Link Copied",
+			Title = "Solix Hub",
 			Description = "Standard key shop link copied",
-			Color = FromRGB(60, 255, 60),
+			Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
 			Duration = 5
 		})
 	end)
