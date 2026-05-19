@@ -31,6 +31,15 @@ local StarterGui = cloneref(game:GetService("StarterGui"))
 local Workspace = cloneref(game:GetService("Workspace"))
 local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
+ local LocalPlayer = cloneref(Players.LocalPlayer)
+    local Mouse = cloneref(LocalPlayer:GetMouse())
+
+    if (identifyexecutor() == "Wave") then
+        getgenv().gethui = function()
+            return game:GetService("CoreGui")
+        end
+    end
+
 local Folder_Configs = {
 	Directory = "solixhub",
 	Assets = "solixhub/Assets",
