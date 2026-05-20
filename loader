@@ -76,7 +76,7 @@ local GameList = {
 	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
 	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = false }, -- Be a Brainrot
 	["4658598196"] = { id = "52cc23f3d78c16c959b080fca6d9cd54", keyless = true }, -- Attack on Titan Revolution
-    ["142823291"] = { id = "7e507d3a7f3171633e9840c1db2c9cf3", keyless = true } -- Murder Mystery 2
+    ["66654135"] = { id = "7e507d3a7f3171633e9840c1db2c9cf3", keyless = true } -- Murder Mystery 2
 }
 
 local Config = {
