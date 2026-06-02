@@ -1093,17 +1093,18 @@ local Library do
 			CloseUI()
 
 			if not (
-				GameId == "3808223175" -- Jujutsu Infinite
-					or GameId == "994732206" -- Blox Fruits
-					or GameId == "1511883870" -- Shindo Life
-					or GameId == "7018190066" -- Dead Rails
-					or GameId == "7671049560" -- The Forge
-					or GameId == "9363735110" -- Escape Tsunami For Brainrots!
-					or GameId == "5130394318" -- Bizarre Lineage
-					or GameId == "9186719164" -- Sailor Piece
-					or GameId == "9787206684" -- Be a Lucky Block
+				GameId == "4658598196" -- Attack on Titan Revolution
 					or GameId == "9875383684" -- Be a Brainrot
-					or GameId == "4658598196" -- Attack on Titan Revolution
+					or GameId == "9787206684" -- Be a Lucky Block
+					or GameId == "5130394318" -- Bizarre Lineage
+					or GameId == "994732206" -- Blox Fruits
+					or GameId == "7018190066" -- Dead Rails
+					or GameId == "9363735110" -- Escape Tsunami For Brainrots!
+					or GameId == "3808223175" -- Jujutsu Infinite
+					or GameId == "66654135" -- Murder Mystery 2
+					or GameId == "9186719164" -- Sailor Piece
+					or GameId == "1511883870" -- Shindo Life
+					or GameId == "7671049560" -- The Forge
 				) and not getgenv().lilix then
 				Library:Notification({
 					Title = "Solix Hub",
