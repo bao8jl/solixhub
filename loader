@@ -56,7 +56,7 @@ end
 local GameList = {
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },  -- 99 Nights in the Forest
 	["9073513091"] = { id = "4abb05ea54cda73a7bdbddb1a4269fc9", keyless = true },  -- Anime Apocalypse
-	["4658598196"] = { id = "52cc23f3d78c16c959b080fca6d9cd54", keyless = true },  -- Attack on Titan Revolution
+	["4658598196"] = { id = "d383a1d5c0a779bbfd0a2b74437923d5", keyless = true },  -- Attack on Titan Revolution
 	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = false }, -- Be a Brainrot
 	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
