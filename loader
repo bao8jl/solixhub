@@ -68,7 +68,8 @@ local GameList = {
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true },  -- Sailor Piece
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
-	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true }  -- Jailbreak
+	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
+	["185655149"]  = { id = "c1ee612d7accf314c53044a4c619bc42", keyless = true },  -- BloxBurg
 }
 
 local Config = {
