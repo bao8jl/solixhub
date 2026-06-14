@@ -70,7 +70,10 @@ local GameList = {
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["2309918273"] = { id = "144924a1663177dd28ab2d101d574a06", keyless = true }, -- VV: Ultimatum
-	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true }  -- Jailbreak
+	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
+	["7395930870"]  = { id = "d3191d52e71790d40a4d169f5becd325", keyless = false },  -- Jailbreak
+
+	
 }
 
 local Config = {
