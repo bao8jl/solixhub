@@ -71,6 +71,8 @@ local GameList = {
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
 	["9584852943"]  = { id = "5a2eb34394b62066192303b4b11df3ac", keyless = true },  -- Keyboard Escape
+	["10148749921"]  = { id = "0d120852a6e2eb65c691e5ce2c628429", keyless = true },  -- Animal Hospital
+
 
 }
 
