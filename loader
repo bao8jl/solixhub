@@ -1,13 +1,9 @@
 repeat wait() until game:IsLoaded()
 
-if not LPH_OBFUSCATED then
-	LPH_JIT_MAX = function(...) return ... end
-	LPH_NO_VIRTUALIZE = function(f) return f end
-	LPH_NO_UPVALUES = function(...) return ... end
-	LPH_CRASH = function(...) return ... end
-else
-	print = function() end
-	warn = function() end
+if LPH_OBFUSCATED == nil then
+	LPH_NO_VIRTUALIZE = function(...) return (...) end 
+	LPH_ENCSTR = function(...) return (...) end 
+	LRM_SANITIZE = function(...) return ... end 
 end
 
 local cloneref = cloneref or function(o) return o end
@@ -20,10 +16,17 @@ local HttpService = cloneref(game:GetService("HttpService"))
 local Lighting = cloneref(game:GetService("Lighting"))
 local StarterGui = cloneref(game:GetService("StarterGui"))
 local Workspace = cloneref(game:GetService("Workspace"))
-local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 
 local LocalPlayer = cloneref(Players.LocalPlayer)
 local Mouse = cloneref(LocalPlayer:GetMouse())
+
+if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled then
+	IsMobile = true
+elseif not UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then
+	IsMobile = false
+elseif UserInputService.TouchEnabled and UserInputService.KeyboardEnabled and UserInputService.MouseEnabled then 
+	IsMobile = false
+end 
 
 if (identifyexecutor() == "Wave") then
 	getgenv().gethui = function()
@@ -54,8 +57,9 @@ if not isfolder(GameConfigFolder) then
 end
 
 local GameList = {
+	["9584852943"]  = { id = "61e0f394c005902cda5643069ac59226", keyless = true },  -- +1 Speed Keyboard Escape
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },  -- 99 Nights in the Forest
-	["9073513091"] = { id = "4abb05ea54cda73a7bdbddb1a4269fc9", keyless = true },  -- Anime Apocalypse
+	["10148749921"]  = { id = "0d120852a6e2eb65c691e5ce2c628429", keyless = true },  -- Animal Hospital
 	["4658598196"] = { id = "d383a1d5c0a779bbfd0a2b74437923d5", keyless = true },  -- Attack on Titan Revolution
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
@@ -63,17 +67,13 @@ local GameList = {
 	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = true },  -- Dead Rails
 	["9363735110"] = { id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
 	["10200395747"] = { id = "535322ccaa7a6ba59febea91b085c89c", keyless = true }, -- Grow a Garden 2,
+	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
 	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
 	["66654135"]   = { id = "7e507d3a7f3171633e9840c1db2c9cf3", keyless = true },  -- Murder Mystery 2
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true },  -- Sailor Piece
-	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["7395930870"]  = { id = "d3191d52e71790d40a4d169f5becd325", keyless = true },  -- Sell Lemons
-	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
-	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
-	["9584852943"]  = { id = "5a2eb34394b62066192303b4b11df3ac", keyless = true },  -- Keyboard Escape
-	["10148749921"]  = { id = "0d120852a6e2eb65c691e5ce2c628429", keyless = true },  -- Animal Hospital
-
-
+	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
+	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false } -- The Forge
 }
 
 local Config = {
@@ -113,20 +113,14 @@ local ScriptId = GameConfig.id
 local IsKeyless = GameConfig.keyless
 
 if hookfunction and hookmetamethod then
-	getgenv().lilix = true
+	LowUnc = false
 else
-	getgenv().lilix = false
+	LowUnc = true
 end
 
-if IsMobile then
-	getgenv().relix = true
-else
-	getgenv().relix = false
-end
-
-local function DeleteFile(v)
-	if isfile(v) then
-		delfile(v)
+local function DeleteFile(Input)
+	if isfile(Input) then
+		delfile(Input)
 	end
 end
 
@@ -234,8 +228,8 @@ local Library do
 	local Tween = { } do
 		Tween.__index = Tween
 
-		Tween.Create = function(self, Item, Info, Goal, IsRawItem)
-			Item = IsRawItem and Item or Item.Instance
+		Tween.Create = function(self, Item, Info, Goal, RawItem)
+			Item = RawItem and Item or Item.Instance
 			Info = Info or TweenInfo.new(Library.Tween.Time, Library.Tween.Style, Library.Tween.Direction)
 
 			local NewTween = {
@@ -400,54 +394,6 @@ local Library do
 		end
 	end
 
-	local CustomFont = { } do
-		function CustomFont:New(Name, Weight, Style, Data)
-			if not isfile(Data.Id) then
-				writefile(Data.Id, game:HttpGet(Data.Url))
-			end
-
-			local AssetSuccess, AssetId = pcall(getcustomasset, Data.Id)
-			if not AssetSuccess then
-				return Font.fromEnum(Enum.Font.Gotham)
-			end
-
-			local FontData = {
-				name = Name,
-				faces = {
-					{
-						name = Name,
-						weight = Weight,
-						style = Style,
-						assetId = AssetId
-					}
-				}
-			}
-
-			local FontPath = Folder_Configs.Assets .. "/" .. Name .. ".font"
-			if not isfile(FontPath) then
-				writefile(FontPath, HttpService:JSONEncode(FontData))
-			end
-
-			local FontAssetSuccess, FontAssetId = pcall(getcustomasset, FontPath)
-			if not FontAssetSuccess then
-				return Font.fromEnum(Enum.Font.Gotham)
-			end
-
-			return Font.new(FontAssetId)
-		end
-
-		local FontSuccess = pcall(function()
-			Library.Font = CustomFont:New("InterSemibold", 400, "Regular", {
-				Id = "InterSemibold",
-				Url = "https://raw.githubusercontent.com/sametexe001/luas/main/fonts/InterSemibold.ttf"
-			})
-		end)
-
-		if not FontSuccess then
-			Library.Font = Font.fromEnum(Enum.Font.Gotham)
-		end
-	end
-
 	Library.Holder = Instances:Create("ScreenGui", {
 		Parent = SafeGetUI(),
 		Name = "\0",
@@ -563,7 +509,7 @@ local Library do
 
 	local function GetTextSize(Text, Width)
 		local Success, Result = pcall(function()
-			return TextService:GetTextSize(Text, 14, Library.Font, Vector2New(Width, 10000))
+			return TextService:GetTextSize(Text, 14, Font.new("GothamBold"), Vector2New(Width, 10000))
 		end)
 
 		if not Success or not Result then
@@ -589,7 +535,7 @@ local Library do
 		local MaxWidth = 330
 
 		local function GetTextSize(Text, FontSize, Width)
-			local Font = Library.Font
+			local Font = Font.new("GothamBold")
 
 			if typeof(Font) ~= "EnumItem" or Font.EnumType ~= Enum.Font then
 				Font = Enum.Font.Gotham
@@ -653,7 +599,7 @@ local Library do
 				Text = TitleText,
 				TextColor3 = Library.Theme["Text"],
 				TextSize = 14,
-				FontFace = Library.Font,
+				FontFace = Font.new("GothamBold"),
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextYAlignment = Enum.TextYAlignment.Top,
 				TextWrapped = true,
@@ -671,7 +617,7 @@ local Library do
 				Text = DescText,
 				TextColor3 = Library.Theme["Text"],
 				TextSize = 12,
-				FontFace = Library.Font,
+				FontFace = Font.new("GothamBold"),
 				TextTransparency = 1,
 				TextXAlignment = Enum.TextXAlignment.Left,
 				TextYAlignment = Enum.TextYAlignment.Top,
@@ -824,7 +770,7 @@ local Library do
 			Text = Config.Title,
 			TextColor3 = Library.Theme["Accent"],
 			TextSize = 28,
-			FontFace = Library.Font,
+			FontFace = Font.new("GothamBold"),
 			TextTransparency = 1,
 			ZIndex = 2
 		}):AddToTheme({TextColor3 = 'Accent'})
@@ -839,7 +785,7 @@ local Library do
 			Text = Config.Description,
 			TextColor3 = Library.Theme["Inactive Text"],
 			TextSize = 13,
-			FontFace = Library.Font,
+			FontFace = Font.new("GothamBold"),
 			TextTransparency = 1,
 			ZIndex = 2
 		}):AddToTheme({TextColor3 = 'Inactive Text'})
@@ -903,7 +849,7 @@ local Library do
 			Text = "",
 			TextColor3 = Library.Theme["Text"],
 			TextSize = 15,
-			FontFace = Library.Font,
+			FontFace = Font.new("GothamBold"),
 			PlaceholderText = "Paste your key here...",
 			PlaceholderColor3 = Library.Theme["Inactive Text"],
 			TextXAlignment = Enum.TextXAlignment.Left,
@@ -923,7 +869,7 @@ local Library do
 			Text = "X",
 			TextColor3 = Library.Theme["Text"],
 			TextSize = 18,
-			FontFace = Library.Font,
+			FontFace = Font.new("GothamBold"),
 			AutoButtonColor = false,
 			TextTransparency = 1,
 			ZIndex = 2
@@ -960,7 +906,7 @@ local Library do
 			Text = Text,
 			TextColor3 = Library.Theme["Text"],
 			TextSize = IsMobile and 13 or 15,
-			FontFace = Library.Font,
+			FontFace = Font.new("GothamBold"),
 			AutoButtonColor = false,
 			TextTransparency = 1,
 			ZIndex = 2
@@ -1094,36 +1040,9 @@ local Library do
 				Duration = 5
 			})
 
-			wait(1.5)
 			CloseUI()
-
-			if not (
-				GameId == "4658598196" -- Attack on Titan Revolution
-					or GameId == "9875383684" -- Be a Brainrot
-					or GameId == "9787206684" -- Be a Lucky Block
-					or GameId == "5130394318" -- Bizarre Lineage
-					or GameId == "994732206" -- Blox Fruits
-					or GameId == "7018190066" -- Dead Rails
-					or GameId == "9363735110" -- Escape Tsunami For Brainrots!
-					or GameId == "10200395747" -- Grow a Garden 2
-					or GameId == "3808223175" -- Jujutsu Infinite
-					or GameId == "66654135" -- Murder Mystery 2
-					or GameId == "9186719164" -- Sailor Piece
-					or GameId == "1511883870" -- Shindo Life
-					or GameId == "7671049560" -- The Forge
-					or GameId == "2309918273" -- VV: Ultimatum
-				) and not getgenv().lilix then
-				Library:Notification({
-					Title = "Solix Hub",
-					Description = "This executor is not supported for this game.",
-					Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-					Duration = 5
-				})
-			end
-
-			pcall(function()
-				LuarmorApi.load_script()
-			end)
+			wait(0.03)
+			LuarmorApi.load_script()
 
 			return true
 		end
