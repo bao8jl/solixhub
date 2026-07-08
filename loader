@@ -57,7 +57,7 @@ if not isfolder(GameConfigFolder) then
 end
 
 local GameList = {
-	["9584852943"]  = { id = "61e0f394c005902cda5643069ac59226", keyless = true },  -- +1 Speed Keyboard Escape
+	["9584852943"]  = { id = "61e0f394c005902cda5643069ac59226", keyless = false },  -- +1 Speed Keyboard Escape
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },  -- 99 Nights in the Forest
 	["10148749921"]  = { id = "0d120852a6e2eb65c691e5ce2c628429", keyless = false },  -- Animal Hospital
 	["4658598196"] = { id = "d383a1d5c0a779bbfd0a2b74437923d5", keyless = true },  -- Attack on Titan Revolution
