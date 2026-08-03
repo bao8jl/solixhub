@@ -945,7 +945,7 @@ local Library do
 			Button.Button.Instance.Size = UDim2New(0, 320, 0, 42)
 		end
 	else
-		Items["Button1"] = CreateButton("Get Key (Linkvertise)", UDim2New(0.25, 0, 0, 190))
+		Items["Button1"] = CreateButton("Get Key (Workink)", UDim2New(0.25, 0, 0, 190))
 		Items["Button2"] = CreateButton("Get Key (Rinku)", UDim2New(0.75, 0, 0, 190))
 		Items["Button3"] = CreateButton("Join Discord", UDim2New(0.25, 0, 0, 255))
 		Items["Button4"] = CreateButton("Buy Standard Key", UDim2New(0.75, 0, 0, 255))
